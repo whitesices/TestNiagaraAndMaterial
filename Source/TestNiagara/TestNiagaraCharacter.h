@@ -5,6 +5,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "Logging/LogMacros.h"
+#include "BaseAttributeSets.h"
+
 #include "TestNiagaraCharacter.generated.h"
 
 class USpringArmComponent;
@@ -12,6 +14,7 @@ class UCameraComponent;
 class UInputMappingContext;
 class UInputAction;
 struct FInputActionValue;
+class UAbilitySystemComponent;
 
 DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
 
@@ -63,6 +66,14 @@ protected:
 	
 	// To add mapping context
 	virtual void BeginPlay();
+
+protected:
+	//声明Gameplay属性
+	UPROPERTY( EditAnywhere , BlueprintReadOnly , Category = "BaseAttributes" )
+	const class UBaseAttributeSets* BaseAttributes;
+
+	UPROPERTY( EditAnywhere , BlueprintReadOnly , Category = "BaseAttributes" )
+	UAbilitySystemComponent* ASC;
 
 public:
 	/** Returns CameraBoom subobject **/

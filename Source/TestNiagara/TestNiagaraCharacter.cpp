@@ -10,6 +10,9 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
+//引入AbilitySystemComponent
+#include "AbilitySystemComponent.h"
+
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
@@ -52,12 +55,21 @@ ATestNiagaraCharacter::ATestNiagaraCharacter()
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
+
+	//给ASC赋值
+	ASC = CreateDefaultSubobject< UAbilitySystemComponent>( TEXT("AbilitySystemComponent") );
 }
 
 void ATestNiagaraCharacter::BeginPlay()
 {
 	// Call the base class  
 	Super::BeginPlay();
+
+	//验证ASC的有效性
+	if ( IsValid(ASC) )
+	{
+		BaseAttributes = ASC->GetSet<UBaseAttributeSets>();
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
