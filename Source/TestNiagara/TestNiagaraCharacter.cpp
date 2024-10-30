@@ -12,6 +12,8 @@
 #include "InputActionValue.h"
 //引入AbilitySystemComponent
 #include "AbilitySystemComponent.h"
+//引入
+#include "BaseAttributeSets.h"
 
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
@@ -69,7 +71,25 @@ void ATestNiagaraCharacter::BeginPlay()
 	if ( IsValid(ASC) )
 	{
 		BaseAttributes = ASC->GetSet<UBaseAttributeSets>();
+
+		//获取游戏属性更改委托 ， 将绑定到该控件的属性值做修改
+		//Bind an event to listen to health value changes
+		ASC->GetGameplayAttributeValueChangeDelegate( BaseAttributes->GetHealthAttribute() ).AddUObject( this , &ATestNiagaraCharacter::HealthChanged );
 	}
+}
+
+//健康属性值改变
+void ATestNiagaraCharacter::HealthChanged(const FOnAttributeChangeData& Data)
+{
+	float Health = Data.NewValue;
+	/*UE_LOG( LogTemp , Warning , TEXT(" Health changed %f"), Health );*/
+	UpdateHealth(Health);
+}
+
+//更新健康值
+void ATestNiagaraCharacter::UpdateHealth_Implementation(const float NewHealth)
+{
+
 }
 
 //////////////////////////////////////////////////////////////////////////

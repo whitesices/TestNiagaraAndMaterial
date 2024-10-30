@@ -15,6 +15,7 @@ class UInputMappingContext;
 class UInputAction;
 struct FInputActionValue;
 class UAbilitySystemComponent;
+struct FOnAttributeChangeData;
 
 DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
 
@@ -74,6 +75,13 @@ protected:
 
 	UPROPERTY( EditAnywhere , BlueprintReadOnly , Category = "BaseAttributes" )
 	UAbilitySystemComponent* ASC;
+
+	//Callback function On Health value changed
+	virtual void HealthChanged( const FOnAttributeChangeData& Data);
+
+	//更新健康值
+	UFUNCTION( BlueprintNativeEvent , Category = "Base Actor Attributes")
+	void UpdateHealth( const float NewHealth);
 
 public:
 	/** Returns CameraBoom subobject **/
